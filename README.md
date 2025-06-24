@@ -1,36 +1,59 @@
-# unwxapkg
-支持wxapkg格式的解压和压缩
-安装：
+English | [中文](./README.zh-CN.md) 
+
+# dwxapkg
+
+A tool for compressing and decompressing WeChat Mini Program (`.wxapkg`) files.
+
+## Installation
+
 ```sh
-npm i https://github.com/dzqdzq/unwxapkg.git -g
+npm install -g https://github.com/dzqdzq/dwxapkg.git
 ```
 
-压缩命令：unwxapkg dir   
-默认生成文件：dir.wxapkg
+## Usage
 
-解压命令： unwxapkg file
-默认生成目录： file/
+The tool can either compress a directory into a `.wxapkg` file or decompress a `.wxapkg` file into a directory.
 
-说明： 如果参数是目录，那么将对这个目录压缩，默认排除点开头的文件。 如果是文件名， 那么默认执行解压， 目前支持的文件格式有'.wxapkg', '.wxvpkg', '.wx'。
+### Commands
 
-<b>2023年11月19日更新：</b><br/>
-支持PC端小游戏解压，使用方法：unwxapkg /a/b/c/111.wxapkg  wx111111111
-如果wxapkg文件在微信小程序存放目录，可以忽略wxid参数
+| Action      | Command                | Default Output      |
+| :---------- | :--------------------- | :------------------ |
+| Compress    | `dwxapkg <directory>` | `<directory>.wxapkg` |
+| Decompress  | `dwxapkg <file>`      | `<file>/`           |
 
-<b>2024年01月04日更新：</b><br/>
-Mac下执行:<br/>
-unwxapkg /a/b/c/.wxapplet/packages/wx2f7fda52d8d031ee/139/xxxxx_dir<br/>
-生成的xxxxx_dir.wxapkg 压缩包不会加密<br/>
-unwxapkg /a/b/c//.wxapplet/packages/wx2f7fda52d8d031ee/139/xxxxx_dir wx2f7fda52d8d031ee<br/>
-生成的xxxxx_dir.wxapkg 由于显示指定wxid,压缩包会加密<br/>
-<br/>
-<br/>
-Win下执行:<br/>
-unwxapkg /a/b/c/.wxapplet/packages/wx2f7fda52d8d031ee/139/xxxxx_dir<br/>
-生成的xxxxx_dir.wxapkg 压缩包会加密，因为在路径中解析到wx2f7fda52d8d031ee<br/>
-unwxapkg /a/b/c/.wxapplet/packages/wx2f7fda52d8d031ee/139/xxxxx_dir wx2f7fda52d8d031ee<br/>
-生成的xxxxx_dir.wxapkg 由于显示指定wxid,压缩包会加密<br/>
-unwxapkg /a/b/c/139/xxxxx_dir wx2f7fda52d8d031ee<br/>
-生成的xxxxx_dir.wxapkg 由于显示指定wxid,压缩包会加密<br/>
-unwxapkg /a/b/c/139/xxxxx_dir<br/>
-生成的xxxxx_dir.wxapkg 没有指定wxid, 也没有解析到wxid，跳过加密<br/>
+**Note:**
+*   If the argument is a directory, it will be compressed. Files starting with a dot (`.`) are excluded by default.
+*   If the argument is a file, it will be decompressed. Supported file extensions are `.wxapkg`, `.wxvpkg`, and `.wx`.
+
+### Encryption and Decryption
+
+This tool supports encryption and decryption for PC Mini Program packages.
+
+#### Decompression
+
+To decompress an encrypted PC Mini Program package, you need to provide the `wxid`:
+
+```sh
+dwxapkg /path/to/your/package.wxapkg your_wxid
+```
+
+If the `.wxapkg` file is located in the WeChat Mini Program's storage directory, the `wxid` can be omitted.
+
+#### Compression
+
+The encryption behavior during compression depends on the operating system and whether a `wxid` is provided.
+
+**On macOS:**
+*   **Without `wxid`**: The package will **not** be encrypted.
+    ```sh
+    dwxapkg /path/to/your/directory
+    ```
+*   **With `wxid`**: The package **will** be encrypted.
+    ```sh
+    dwxapkg /path/to/your/directory your_wxid
+    ```
+
+**On Windows:**
+*   If the `wxid` can be automatically detected from the file path (e.g., inside a `.wxapplet` directory), the package **will** be encrypted.
+*   If a `wxid` is explicitly provided, the package **will** be encrypted.
+*   If no `wxid` is provided and it cannot be detected from the path, encryption will be skipped.

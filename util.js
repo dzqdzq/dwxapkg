@@ -1,6 +1,3 @@
-const fs = require('fs');
-const path = require('path');
-
 
 module.exports = {
   /**
@@ -99,29 +96,5 @@ module.exports = {
     return buffer.slice(begin, end);
   },
 
-  /**
-   * 文件遍历方法
-   * @param filePath 需要遍历的文件路径
-   */
-  fileDisplay(filePath, r) {
-    let files = fs.readdirSync(filePath);
 
-    for(let filename of files){
-      if(filename[0] === '.'){
-        continue;
-      }
-      //获取当前文件的绝对路径
-      var filedir = path.join(filePath, filename);
-      let stats = fs.statSync(filedir);
-      var isFile = stats.isFile(); //是文件
-      var isDir = stats.isDirectory(); //是文件夹
-      if (isFile) {
-        r.push({file: filedir, stats});
-        // console.log(filedir);
-      }
-      if (isDir) {
-        arguments.callee(filedir, r); //递归，如果是文件夹，就继续遍历该文件夹下面的文件
-      }
-    }
-  },
 };
