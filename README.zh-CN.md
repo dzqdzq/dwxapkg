@@ -7,7 +7,7 @@
 ## 安装
 
 ```sh
-npm install -g https://github.com/dzqdzq/dwxapkg.git
+npm i -g dwxapkg
 ```
 
 ## 使用方法

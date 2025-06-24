@@ -1,6 +1,6 @@
 {
   "name": "dwxapkg",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "对wxapkg/wxvpkg文件进行解包",
   "author": "dzqdzq",
   "main": "index.js",

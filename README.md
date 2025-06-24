@@ -7,7 +7,7 @@ A tool for compressing and decompressing WeChat Mini Program (`.wxapkg`) files.
 ## Installation
 
 ```sh
-npm install -g https://github.com/dzqdzq/dwxapkg.git
+npm i -g dwxapkg
 ```
 
 ## Usage
